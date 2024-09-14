@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
-import { MovieDBFetch, MoviesFetch } from './MovieFetch';
+import { DailyBoxOffice_Fetch, KMDb_MovieInfo } from './modules/fetchs';
 
 const MainWrapper = styled.div`
   padding: 5px 0px;
@@ -32,12 +32,12 @@ const Title = styled.header`
 function App(){
   const {isLoading: KoficLoading, data: KoficData, error} = useQuery({
     queryKey: "Movies",
-    queryFn: MoviesFetch
+    queryFn: DailyBoxOffice_Fetch
   });
 
   const {isLoading: KMDbLoading, data: KMDb_Data} = useQuery({
     queryKey: "MovieDetail",
-    queryFn: MovieDBFetch
+    queryFn: KMDb_MovieInfo
   });
 
   useEffect(() => {
@@ -45,7 +45,7 @@ function App(){
     console.log(KoficData);
   });
 
-  const PosterURL = "http://file.koreafilm.or.kr/thm/02/99/18/41/tn_DPK021958.jpg";
+  const PosterURL = "http://file.koreafilm.or.kr/thm/02/99/18/33/tn_DPK021733.jpg";
 
   return (
     <MainWrapper>

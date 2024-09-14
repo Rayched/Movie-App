@@ -1,0 +1,172 @@
+{
+  "main": {
+    "id": "31e6adecbb0e17ef",
+    "type": "split",
+    "children": [
+      {
+        "id": "e7c3fa4a03b6d26d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "72c286626733cdf3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "day01_report.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "8ccd35b2a09609fc",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "day02_report.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "4c0d0171e7aa44f6",
+    "type": "split",
+    "children": [
+      {
+        "id": "c9bc253354305441",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ffb28c230f7c1e36",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "017b68ebab94459d",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "884ab475662b66c8",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "right": {
+    "id": "2f05afa680182422",
+    "type": "split",
+    "children": [
+      {
+        "id": "cf22bf565600c709",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "80324224699c996d",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "day02_report.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "2a4b25d47accb738",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "day02_report.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "63c05915f572b63d",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "e120c6d4f9db6071",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "day02_report.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:퀵 스위처 열기": false,
+      "graph:그래프 뷰 열기": false,
+      "canvas:새 캔버스 만들기": false,
+      "daily-notes:오늘의 데일리 노트 열기": false,
+      "templates:템플릿 삽입": false,
+      "command-palette:명령어 팔레트 열기": false
+    }
+  },
+  "active": "8ccd35b2a09609fc",
+  "lastOpenFiles": [
+    "day01_report.md",
+    "day02_report.md",
+    "ref/Data-Fetch_sample.png.crswap",
+    "ref/Data-Fetch_sample.png",
+    "ref/Movie_App_old-version_sample.png.crswap",
+    "ref/Movie_App_old-version_sample.png"
+  ]
+}

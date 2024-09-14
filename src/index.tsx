@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { ThemeProvider } from 'styled-components';
-import { DarkTheme, LightTheme } from './theme';
+import { DarkTheme, LightTheme } from './modules/theme';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 const root = ReactDOM.createRoot(

@@ -64,11 +64,69 @@ root.render(
 
 ### Open API, 영화 data fetch하기
 
-- 이전 버전에서는 영화진흥위원회 Open API로, 영화 data를 fetch 했는데
-- 국내 영화에 대한 정보를 보여주고 싶었기 때문에
-- 나름 적합한 Open API였지만, 조금 아쉬운 부분이 있었다.
+- 이번 프로젝트에서 사용할 Open API는 일단은 세 종류 정도 된다.
+- 사용할 API 목록은 다음과 같다.
 
-- `포스터`, `스틸컷`, `줄거리`,.. 없던게 아쉬웠었다.
-- 물론 그때 당시에는 이러한 아쉬운 점을 해결할 지식이 없었기에 <br/> 
-    아쉬운대로 개발을 진행했었다.
-- 이후, 프로젝트를 마치고 
+```
+영화진흥위원회 Open API / Kofic Open API
+- 일일 박스오피스 API
+- 영화 상세정보 API
+
+한국영화 데이터베이스 Open API / KMDb Open API
+- 영화 상세정보 API
+```
+
+- 전자의 경우에는 이미 발급해둔 `API Key`가 존재하기 때문에 바로 받아올 수 있었다.
+- 다만 후자, `KMDb API Key`는 발급 신청을 따로 했어야 했다.
+
+- 초창기와는 다르게  `react-query`에 대해 알고 있었기 때문에
+- `data fetch` 관련 코드를 `MovieFetch.ts` 파일에 전부 모아두고
+- `useQuery()` Hook을 통해서 `Movie data`를 받아왔다.
+
+``` ts
+//MovieFetch.ts
+
+//Kofic, 일일 박스오피스
+export async function MoviesFetch(){
+	const Kobis_Data = await fetch("Kofic 일일 박스오피스 API URL");
+	const json = await Kobis_Data.json();
+
+	return json;
+}
+
+export async function MovieDBFetch(){
+	const KMDb_Data = await fetch(KMDb_APIs);
+	const json = await KMDb_Data.json();
+
+	return json;
+}
+```
+
+``` tsx
+//App.tsx
+import {useQuery} from "react-query";
+import { MovieDBFetch, MoviesFetch } from './MovieFetch';
+
+function App(){
+	const {isLoading: KoficLoading, data: KoficData} = useQuery({
+		queryKey: "Movies",
+		queryFn: MoviesFetch
+	});
+	
+	const {isLoading: KMDbLoading, data: KMDb_Data} = useQuery({
+		queryKey: "MovieDetail",
+		queryFn: MovieDBFetch
+	})
+	
+	return (
+		<div>
+			/*기존 코드...*/
+		</div>
+	);
+}
+```
+
+<img src="Data-Fetch_sample.png"/>
+
+- `console` 탭에서 위와 같이 영화 `data` 정상적으로 fetch 해온 것을 확인할 수 있다.
+

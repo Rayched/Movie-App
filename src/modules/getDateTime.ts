@@ -1,6 +1,6 @@
 //일일 박스오피스 api 용 getDays function
 
-export function getDays(){
+export function getDateTime(){
     const DateObj = new Date();
 
     const Years = String(DateObj.getFullYear());

@@ -1,5 +1,5 @@
 
-## 'Movie App' Project 레포트
+## Toy Project - `Movie App` 작업 정리
 
 - **📆 2일차 / 2024.09.14 토요일**
 

@@ -8,31 +8,18 @@
         "type": "tabs",
         "children": [
           {
-            "id": "72c286626733cdf3",
+            "id": "e65b68a6bd24e00d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "day01_report.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8ccd35b2a09609fc",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "day02_report.md",
+                "file": "day03_report.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -82,8 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "2f05afa680182422",
@@ -99,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "day02_report.md",
+                "file": "day03_report.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "day02_report.md",
+                "file": "day03_report.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "day02_report.md"
+                "file": "day03_report.md"
               }
             }
           }
@@ -160,10 +146,11 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "8ccd35b2a09609fc",
+  "active": "e65b68a6bd24e00d",
   "lastOpenFiles": [
     "day01_report.md",
     "day02_report.md",
+    "day03_report.md",
     "ref/Data-Fetch_sample.png.crswap",
     "ref/Data-Fetch_sample.png",
     "ref/Movie_App_old-version_sample.png.crswap",

@@ -1,5 +1,6 @@
 //fetch functions
 
+import { stringify } from "querystring";
 import { getDateTime } from "./getDateTime";
 
 /*
@@ -35,6 +36,34 @@ export async function Kofic_MovieInfo({movieID}: I_KoficMovieDetail){
     return json;
 };*/
 
+interface I_BoxOfficeData {
+    audiAcc: string;
+    audiChange: string;
+    audiCnt: string;
+    audiInten: string;
+    movieCd: string;
+    movieNm: string;
+    openDt: string;
+    rank: string;
+    rankInten: string ;
+    rankOldAndNew: string;
+    rnum: string;
+    salesAcc: string;
+    salesAmt: string ;
+    salesChange: string;
+    salesInten: string;
+    salesShare: string;
+    scrnCnt: string;
+    showCnt: string;
+};
+
+export interface I_movieData {
+    title: string|undefined;
+    rank: string|undefined;
+    openDt: string|undefined;
+    audiCnt: string|undefined;
+    posters: string|undefined;
+}
 const targetDt = getDateTime();
 
 const Kofic_baseURL = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/";
@@ -43,32 +72,38 @@ const Kofic_Key = "3a15c5393ac14d11f6b132d6a07f330c";
 const KMDb_baseURL = "http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2"
 const KMDb_Key = "5UPCXV6TPKSU1P8QHI31";
 
-//KMDB 영화 상세정보 받아오기
-
-export async function getMoviesInfo(movie: any){
-    const getData = await (
+//Home 화면용 fetch functions
+/**
+ * API List
+ * KMDB - 영화 상세정보 api
+ * Kofic - 일일 박스오피스 api
+ */
+export async function MovieInfo(movie: I_BoxOfficeData) {
+    const movieInfos = await(
         await fetch(`${KMDb_baseURL}&detail=Y&title=${movie?.movieNm}&ServiceKey=${KMDb_Key}`)
     ).json();
 
-    return {
-        "title": movie.movieNm,
-        "rank": movie.rank,
-        "openDt": movie.openDt,
-        "audiCnt": movie.audiCnt,
-        "posters": getData.Data[0].Result[0].posters,
-    }
+    const result = movieInfos?.Data[0].Result[0];
+    return result;
 };
 
-export async function getBoxOffice(){
-    const BoxOfficeData = await(await (
-        await fetch(`${Kofic_baseURL}/boxoffice/searchDailyBoxOfficeList.json?key=${Kofic_Key}&targetDt=${targetDt}`)
-    ).json()).boxOfficeResult.dailyBoxOfficeList;
+export async function DailyBoxOffice(){
+    const boxoffice = await(
+        await(
+            await fetch(`${Kofic_baseURL}/boxoffice/searchDailyBoxOfficeList.json?key=${Kofic_Key}&targetDt=${targetDt}`)
+        ).json()
+    ).boxOfficeResult.dailyBoxOfficeList;
 
-    /*
-    const result = await(BoxOfficeData?.map((movie: any) => getMoviesInfo(movie)));
-    
-    await Promise.all(result).then((result) => {
-        console.log(result)
-    });*/
-    return BoxOfficeData;
+    const movieInfos = await (
+        boxoffice?.map((movie: I_BoxOfficeData) => MovieInfo(movie))
+    );
+    /**
+     * movieInfos에 전달된 것은 promise 뿐이다.
+     * 여기서 'then()' method로 처리가 완료된 데이터를 받아오거나
+     * 아니면 MovieInfo 함수에서 처리 완료된 데이터를 return해야 한다...
+     */
+
+    return {
+        boxoffice, movieInfos
+    }
 };

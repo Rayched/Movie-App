@@ -1,27 +1,9 @@
+//전역 state로 관리할 것
+//영화 제목(title), 영화 포스터 url(posters)..?
+
 import { atom } from "recoil";
 
-interface I_AllMovies {
-    audiAcc: string;
-    audiChange: string;
-    audiCnt: string;
-    audiInten: string;
-    movieCd: string;
-    movieNm: string;
-    openDt: string;
-    rank: string;
-    rankInten: string ;
-    rankOldAndNew: string;
-    rnum: string;
-    salesAcc: string;
-    salesAmt: string ;
-    salesChange: string;
-    salesInten: string;
-    salesShare: string;
-    scrnCnt: string;
-    showCnt: string;
-};
-
-export const DailyList= atom<I_AllMovies[]>({
-    key: "DailyList",
-    default: []
-});
+export const Movies = atom({
+    key: "Movies",
+    default: [] as any
+})

@@ -99,17 +99,16 @@ export async function DailyBoxOffice(){
 };
 
 interface I_MovieDetail {
-    movieNm: string|undefined;
     movieCd: string|undefined;
 };
 
 //Detail Page 용 fetch function
-export async function MovieDetail({movieNm, movieCd}: I_MovieDetail){
+export async function MovieDetail({movieCd}: I_MovieDetail){
     const details = await (
         await (
-            await fetch(`${Kofic_baseURL}`)
+            await fetch(`${Kofic_baseURL}/movie/searchMovieInfo.json?key=${Kofic_Key}&movieCd=${movieCd}`)
         ).json()
-    );
+    ).movieInfoResult?.movieInfo;
 
     return details;
 };

@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { DailyBoxOffice, MovieInfo } from "../modules/fetchs";
+import { DailyBoxOffice, MovieDetail, MovieInfo } from "../modules/fetchs";
 import { useEffect } from "react";
 
 function Home(){
@@ -13,10 +13,15 @@ function Home(){
         queryFn: MovieInfo
     });
 
-    const isLoading = isMovies || isInfos;
+    const {isLoading: isDetails, data: movieDetail} = useQuery({
+        queryKey: "movieDetails",
+        queryFn: () => MovieDetail({movieCd: "20239670"})
+    })
+
+    const isLoading = isMovies || isInfos || isDetails;
 
     useEffect(() => {
-        console.log({boxOffice, movieInfo});
+        console.log({boxOffice, movieInfo, movieDetail});
     }, [isLoading]);
     
     return (

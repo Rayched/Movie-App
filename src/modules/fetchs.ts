@@ -78,13 +78,14 @@ const KMDb_Key = "5UPCXV6TPKSU1P8QHI31";
  * KMDB - 영화 상세정보 api
  * Kofic - 일일 박스오피스 api
  */
-export async function MovieInfo(movie: I_BoxOfficeData) {
-    const movieInfos = await(
-        await fetch(`${KMDb_baseURL}&detail=Y&title=${movie?.movieNm}&ServiceKey=${KMDb_Key}`)
-    ).json();
+export async function MovieInfo() {
+    const movieInfos = await (
+        await (
+            await fetch(`${KMDb_baseURL}&detail=Y&title=파묘&ServiceKey=${KMDb_Key}`)
+        ).json()
+    ).Data[0].Result[0];
 
-    const result = movieInfos?.Data[0].Result[0];
-    return result;
+    return movieInfos;
 };
 
 export async function DailyBoxOffice(){
@@ -94,16 +95,21 @@ export async function DailyBoxOffice(){
         ).json()
     ).boxOfficeResult.dailyBoxOfficeList;
 
-    const movieInfos = await (
-        boxoffice?.map((movie: I_BoxOfficeData) => MovieInfo(movie))
-    );
-    /**
-     * movieInfos에 전달된 것은 promise 뿐이다.
-     * 여기서 'then()' method로 처리가 완료된 데이터를 받아오거나
-     * 아니면 MovieInfo 함수에서 처리 완료된 데이터를 return해야 한다...
-     */
+    return boxoffice;
+};
 
-    return {
-        boxoffice, movieInfos
-    }
+interface I_MovieDetail {
+    movieNm: string|undefined;
+    movieCd: string|undefined;
+};
+
+//Detail Page 용 fetch function
+export async function MovieDetail({movieNm, movieCd}: I_MovieDetail){
+    const details = await (
+        await (
+            await fetch(`${Kofic_baseURL}`)
+        ).json()
+    );
+
+    return details;
 };

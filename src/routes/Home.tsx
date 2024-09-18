@@ -1,16 +1,31 @@
 import { useQuery } from "react-query";
-import { DailyBoxOffice } from "../modules/fetchs";
+import { DailyBoxOffice, MovieInfo } from "../modules/fetchs";
+import { useEffect } from "react";
 
 function Home(){
-    const {isLoading: isMovies, data: movieData} = useQuery({
+    const {isLoading: isMovies, data: boxOffice} = useQuery({
         queryKey: "movies",
         queryFn: DailyBoxOffice
     });
 
-    console.log(movieData);
+    const {isLoading: isInfos, data: movieInfo} = useQuery({
+        queryKey: "movieInfos",
+        queryFn: MovieInfo
+    });
+
+    const isLoading = isMovies || isInfos;
+
+    useEffect(() => {
+        console.log({boxOffice, movieInfo});
+    }, [isLoading]);
     
     return (
-        <div></div>
+        <div>
+            {
+                isLoading ? <div>로딩 중...</div>
+                : <div>데이터 로딩 완료!!</div>
+            }
+        </div>
     );
 };
 

@@ -1,34 +1,43 @@
 import { useQuery } from "react-query";
-import { DailyBoxOffice, MovieDetail, MovieInfo } from "../modules/fetchs";
+import { DailyBoxOffice, I_BoxOfficeData, MovieInfo } from "../modules/fetchs";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { useEffect } from "react";
+import { movieInfoDatas, movieNames } from "../modules/atoms";
 
 function Home(){
-    const {isLoading: isMovies, data: boxOffice} = useQuery({
+    const {isLoading: isMovies, data: boxOffice} = useQuery<I_BoxOfficeData[]>({
         queryKey: "movies",
         queryFn: DailyBoxOffice
     });
 
-    const {isLoading: isInfos, data: movieInfo} = useQuery({
-        queryKey: "movieInfos",
-        queryFn: MovieInfo
-    });
-
-    const {isLoading: isDetails, data: movieDetail} = useQuery({
-        queryKey: "movieDetails",
-        queryFn: () => MovieDetail({movieCd: "20239670"})
-    })
-
-    const isLoading = isMovies || isInfos || isDetails;
+    const [names, setNames] = useRecoilState(movieNames);
+    const setMovieInfo = useSetRecoilState(movieInfoDatas);
 
     useEffect(() => {
-        console.log({boxOffice, movieInfo, movieDetail});
-    }, [isLoading]);
+        setNames(() => boxOffice?.map((movie) => movie.movieNm));
+        console.log(names);
+
+        const getInfo = async () => {
+            const info = await (
+                names?.map((movie) => MovieInfo(movie))
+            );
+        }
+        
+        getInfo();
+    }, [boxOffice])
     
     return (
         <div>
             {
-                isLoading ? <div>로딩 중...</div>
-                : <div>데이터 로딩 완료!!</div>
+                isMovies ? <div>로딩 중...</div>
+                : (
+                <div>
+                    {
+                        boxOffice?.map((props) => {
+                            return <div>{props?.movieNm}</div>
+                        })
+                    }
+                </div>)
             }
         </div>
     );

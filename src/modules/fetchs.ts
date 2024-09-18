@@ -36,7 +36,7 @@ export async function Kofic_MovieInfo({movieID}: I_KoficMovieDetail){
     return json;
 };*/
 
-interface I_BoxOfficeData {
+export interface I_BoxOfficeData {
     audiAcc: string;
     audiChange: string;
     audiCnt: string;
@@ -57,13 +57,14 @@ interface I_BoxOfficeData {
     showCnt: string;
 };
 
-export interface I_movieData {
-    title: string|undefined;
-    rank: string|undefined;
-    openDt: string|undefined;
-    audiCnt: string|undefined;
-    posters: string|undefined;
-}
+interface I_MovieDetail {
+    movieNm: string;
+    movieCd: string;
+    director: string;
+    posters: string;
+    plots: string;
+};
+
 const targetDt = getDateTime();
 
 const Kofic_baseURL = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/";
@@ -78,14 +79,12 @@ const KMDb_Key = "5UPCXV6TPKSU1P8QHI31";
  * KMDB - 영화 상세정보 api
  * Kofic - 일일 박스오피스 api
  */
-export async function MovieInfo() {
-    const movieInfos = await (
-        await (
-            await fetch(`${KMDb_baseURL}&detail=Y&title=파묘&ServiceKey=${KMDb_Key}`)
-        ).json()
-    ).Data[0].Result[0];
+export async function MovieInfo(movieNm: string) {
+    const Infos = await (
+        await fetch(`${KMDb_baseURL}&detail=Y&title=${movieNm}&ServiceKey=${KMDb_Key}`)
+    ).json()
 
-    return movieInfos;
+    return Infos;
 };
 
 export async function DailyBoxOffice(){
@@ -96,10 +95,6 @@ export async function DailyBoxOffice(){
     ).boxOfficeResult.dailyBoxOfficeList;
 
     return boxoffice;
-};
-
-interface I_MovieDetail {
-    movieCd: string|undefined;
 };
 
 //Detail Page 용 fetch function

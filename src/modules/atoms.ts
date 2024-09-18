@@ -3,7 +3,12 @@
 
 import { atom } from "recoil";
 
-export const Movies = atom({
-    key: "Movies",
-    default: [] as any
+export const movieNames = atom<string[]|undefined>({
+    key: "movieNames",
+    default: []
+});
+
+export const movieInfoDatas = atom({
+    key: "movieInfo_Datas",
+    default: []
 })

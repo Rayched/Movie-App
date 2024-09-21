@@ -1,57 +1,25 @@
 import { useQuery } from "react-query";
 import { useEffect } from "react";
-import { getDateTime } from "../modules/getDateTime";
 import { getMovieNames } from "../modules/TestCodes";
 import { useRecoilState } from "recoil";
-import { I_Poster, PosterURL } from "../modules/atoms";
-
-interface I_movies {
-    director: string|undefined;
-    movieCd: string|undefined;
-    movieNm: string|undefined;
-    openDt: string|undefined;
-    plot: string|undefined;
-    posterURLs: string|undefined;
-    rank: string|undefined;
-}
-
-interface I_BoxOffice {
-    audiAcc? : string;
-    audiChange? : string;
-    audiCnt? : string;
-    audiInten? : string;
-    movieCd? : string;
-    movieNm? : string;
-    openDt? : string;
-    rank? : string;
-    rankInten? : string ;
-    rankOldAndNew? : string;
-    rnum? : string;
-    salesAcc? : string;
-    salesAmt? : string ;
-    salesChange? : string;
-    salesInten? : string;
-    salesShare? : string;
-    scrnCnt? : string;
-    showCnt? : string;
-}
-
-const Kofic_baseURL = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/";
-const Kofic_Key = "3a15c5393ac14d11f6b132d6a07f330c";
-
-const targetDt = getDateTime();
+import { API_Datas, I_MovieDatas } from "../modules/atoms";
 
 function Home(){
-    const [poster, setPoster] = useRecoilState<I_Poster[]>(PosterURL);
+    const [poster, setPoster] = useRecoilState<I_MovieDatas[]|undefined>(API_Datas);
 
-    const {isLoading: TestLoading, data: API_Test} = useQuery({
+    const {isLoading: TestLoading, data: API_Test} = useQuery<I_MovieDatas[]>({
         queryKey: "Test",
         queryFn: getMovieNames
     });
 
     useEffect(() => {
-        console.log(API_Test);
-    }, [TestLoading])
+        setPoster(API_Test);
+    }, [TestLoading]);
+
+    useEffect(() => {
+        console.log("poster is recoil state (atom)");
+        console.log(poster);
+    }, [poster]);
 
     return (
         <div>
@@ -68,7 +36,7 @@ function Home(){
                                     API_Test?.map((movies) => {
                                         return (
                                             <li>
-                                                <img src={movies.posters.split("|")[0]}/>
+                                                <img src={movies?.posters?.split("|")[0]}/>
                                                 {movies?.movieNm} / {movies?.director} / {movies.openDt}
                                             </li>
                                         );

@@ -75,7 +75,5 @@ export async function getMovieNames() {
 
     const result = Promise.all(convert).then((value) => value);
 
-    console.log(result);
-
     return result;
 };

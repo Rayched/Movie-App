@@ -3,11 +3,15 @@
 
 import { atom } from "recoil";
 
-export interface I_Poster {
-    posterURLs: string|undefined;
+export interface I_MovieDatas {
+    movieNm: string|undefined;
+    openDt: string|undefined;
+    director: string|undefined;
+    posters: string|undefined;
+    plots: string|undefined;
 }
 
-export const PosterURL = atom<I_Poster[]>({
+export const API_Datas = atom<I_MovieDatas[]|undefined>({
     key: "posters",
     default: []
 })

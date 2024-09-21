@@ -1,69 +1,5 @@
 //fetch functions
-
-import { stringify } from "querystring";
 import { getDateTime } from "./getDateTime";
-
-/*
-import { getDays } from "./getDays";
-
-interface I_KoficMovieDetail {
-    movieID: string;
-}
-
-interface I_KMDbDetail {
-    movieNm: string;
-}
-
-//일일 박스오피스 fetch
-export async function DailyBoxOffice_Fetch(){
-    const Dailys = await fetch(
-        `${Kofic_baseURL}/boxoffice/searchDailyBoxOfficeList.json?key=${Kofic_Key}&targetDt=${targetDts}`
-    );
-
-    const json = await Dailys.json();
-
-    return json;
-};
-
-//Kofic 영화 상세정보 fetch
-export async function Kofic_MovieInfo({movieID}: I_KoficMovieDetail){
-    const MovieInfo = await fetch(
-        `${Kofic_baseURL}/movie/searchMovieInfo.json?key=${Kofic_Key}c&movieCd=${movieID}`
-    );
-
-    const json = await MovieInfo.json();
-
-    return json;
-};*/
-
-export interface I_BoxOfficeData {
-    audiAcc: string;
-    audiChange: string;
-    audiCnt: string;
-    audiInten: string;
-    movieCd: string;
-    movieNm: string;
-    openDt: string;
-    rank: string;
-    rankInten: string ;
-    rankOldAndNew: string;
-    rnum: string;
-    salesAcc: string;
-    salesAmt: string ;
-    salesChange: string;
-    salesInten: string;
-    salesShare: string;
-    scrnCnt: string;
-    showCnt: string;
-};
-
-interface I_MovieDetail {
-    movieNm: string;
-    movieCd: string;
-    director: string;
-    posters: string;
-    plots: string;
-};
 
 const targetDt = getDateTime();
 
@@ -73,37 +9,44 @@ const Kofic_Key = "3a15c5393ac14d11f6b132d6a07f330c";
 const KMDb_baseURL = "http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2"
 const KMDb_Key = "5UPCXV6TPKSU1P8QHI31";
 
-//Home 화면용 fetch functions
-/**
- * API List
- * KMDB - 영화 상세정보 api
- * Kofic - 일일 박스오피스 api
- */
-export async function MovieInfo(movieNm: string) {
-    const Infos = await (
-        await fetch(`${KMDb_baseURL}&detail=Y&title=${movieNm}&ServiceKey=${KMDb_Key}`)
-    ).json()
+export const MovieInfos = async(movie: any) => {
+    const getMovieInfos = await(
+        await (
+            await fetch(`${KMDb_baseURL}&detail=Y&title=${movie?.movieNm}&ServiceKey=${KMDb_Key}`)
+        ).json()
+    ).Data[0].Result[0];
 
-    return Infos;
+    return {
+        "rank": movie?.rank,
+        "movieCd": movie?.movieCd,
+        "movieNm": movie?.movieNm,
+        "director": getMovieInfos?.directors.director[0].directorNm,
+        "openDt": movie.openDt,
+        "posterURLs": getMovieInfos?.posters,
+        "plot": getMovieInfos.plots.plot.plotText
+    };
 };
 
 export async function DailyBoxOffice(){
-    const boxoffice = await(
+    const getBoxoffice = await(
         await(
             await fetch(`${Kofic_baseURL}/boxoffice/searchDailyBoxOfficeList.json?key=${Kofic_Key}&targetDt=${targetDt}`)
         ).json()
     ).boxOfficeResult.dailyBoxOfficeList;
 
-    return boxoffice;
+    const BoxOffice = await (getBoxoffice?.map((movie: any) => MovieInfos(movie.movieNm)));
+    const result = await Promise.all(BoxOffice).then((resp) => {
+        //console.log(resp);
+        return [...resp];
+    });
+
+    return result;
 };
 
-//Detail Page 용 fetch function
-export async function MovieDetail({movieCd}: I_MovieDetail){
-    const details = await (
-        await (
-            await fetch(`${Kofic_baseURL}/movie/searchMovieInfo.json?key=${Kofic_Key}&movieCd=${movieCd}`)
-        ).json()
-    ).movieInfoResult?.movieInfo;
+export async function KMDB_Test(movieNm: string) {
+    const resp = await (await(
+        await fetch(`${KMDb_baseURL}&detail=Y&title=${movieNm}&ServiceKey=${KMDb_Key}`)
+    ).json()).Data[0].Result[0];
 
-    return details;
+    return resp;
 };

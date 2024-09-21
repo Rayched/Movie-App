@@ -1,8 +1,9 @@
 import { useQuery } from "react-query";
-import { DailyBoxOffice, KMDB_Test, MovieInfos } from "../modules/fetchs";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getDateTime } from "../modules/getDateTime";
 import { getMovieNames } from "../modules/TestCodes";
+import { useRecoilState } from "recoil";
+import { I_Poster, PosterURL } from "../modules/atoms";
 
 interface I_movies {
     director: string|undefined;
@@ -41,11 +42,10 @@ const Kofic_Key = "3a15c5393ac14d11f6b132d6a07f330c";
 const targetDt = getDateTime();
 
 function Home(){
-    const [Movies, setMovies] = useState<I_BoxOffice[]>([]);
+    const [poster, setPoster] = useRecoilState<I_Poster[]>(PosterURL);
 
     const {isLoading: TestLoading, data: API_Test} = useQuery({
         queryKey: "Test",
-        //queryFn: () => KMDB_Test("베테랑2")
         queryFn: getMovieNames
     });
 
@@ -69,7 +69,7 @@ function Home(){
                                         return (
                                             <li>
                                                 <img src={movies.posters.split("|")[0]}/>
-                                                {movies?.movieNm} / {movies?.director}
+                                                {movies?.movieNm} / {movies?.director} / {movies.openDt}
                                             </li>
                                         );
                                     })
@@ -84,3 +84,16 @@ function Home(){
 };
 
 export default Home;
+
+/**
+ * string.split("|")
+ * 
+ * string 객체를 지정한 구분자 ("|", " " 등)를 이용해서
+ * 문자열 하나를 여러 개의 문자열로 나누는 string method
+ * 
+ * "|"로 구분된 poster prop의 값을 여러 개의 문자열 객체로 나누고
+ * 화면에 띄우고 싶은 것은 첫번째 포스터
+ * [0]번 index의 url이므로 아래와 같이 <img />의 src 지정하였다.
+ * 
+ * <img src={API_Test?.poster.split("|")[0]}/>
+ */

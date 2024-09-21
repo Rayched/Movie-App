@@ -30,17 +30,23 @@ const Kofic_Key = "3a15c5393ac14d11f6b132d6a07f330c";
 const KMDb_baseURL = "http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2"
 const KMDb_Key = "5UPCXV6TPKSU1P8QHI31";
 
+interface I_movies {
+    movieNm: string|undefined;
+    openDt: string|undefined;
+}
+
 //KMDB API Key 정상 여부 테스트
-export async function KMDB_Test(movieNm: string) {
+export async function KMDB_Test(movie: I_movies) {
     //movieNm: 영화 이름
     //현재 상영 중인 영화 이름 아무거나 전달
     const resp = await (await(
-        await fetch(`${KMDb_baseURL}&detail=Y&title=${movieNm}&ServiceKey=${KMDb_Key}`)
+        await fetch(`${KMDb_baseURL}&detail=Y&title=${movie?.movieNm}&releaseDts=${movie?.openDt?.split("-").join("")}&ServiceKey=${KMDb_Key}`)
     ).json()).Data[0].Result[0];
 
     return {
-        movieNm: movieNm,
-        openDt: resp?.repRlsDate,
+        movieNm: movie?.movieNm,
+        //openDt: resp?.repRlsDate,
+        openDt: movie?.openDt,
         director: resp?.directors.director[0].directorNm,
         posters: resp?.posters,
         plots: resp.plots.plot[0].plotText
@@ -56,15 +62,20 @@ export async function getMovieNames() {
 
     const getNames = await (
         resp?.map((movie: I_boxOffices) => {
-            return [movie?.movieNm];
+            return {
+                movieNm: movie.movieNm,
+                openDt: movie?.openDt
+            };
         })
     );
 
     const convert = await (
-        getNames?.map((movie: string) => KMDB_Test(movie))
+        getNames?.map((movie: I_movies) => KMDB_Test(movie))
     );
 
     const result = Promise.all(convert).then((value) => value);
+
+    console.log(result);
 
     return result;
 };

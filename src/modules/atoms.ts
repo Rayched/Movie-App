@@ -3,12 +3,11 @@
 
 import { atom } from "recoil";
 
-export const movieNames = atom<string[]|undefined>({
-    key: "movieNames",
-    default: []
-});
+export interface I_Poster {
+    posterURLs: string|undefined;
+}
 
-export const movieInfoDatas = atom({
-    key: "movieInfo_Datas",
+export const PosterURL = atom<I_Poster[]>({
+    key: "posters",
     default: []
 })

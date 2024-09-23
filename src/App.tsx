@@ -1,11 +1,10 @@
 import React from 'react';
-import Home from './routes/Home';
-import MovieDetail from './routes/MovieDetail';
+import Router from './router';
 
 function App(){
   return (
     <div>
-      <MovieDetail />
+      <Router />
     </div>
   );
 }

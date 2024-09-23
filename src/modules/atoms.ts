@@ -2,16 +2,9 @@
 //영화 제목(title), 영화 포스터 url(posters)..?
 
 import { atom } from "recoil";
+import { I_MoviesData } from "./movie_types";
 
-export interface I_MovieDatas {
-    movieNm: string|undefined;
-    openDt: string|undefined;
-    director: string|undefined;
-    posters: string|undefined;
-    plots: string|undefined;
-}
-
-export const API_Datas = atom<I_MovieDatas[]|undefined>({
+export const moviesData = atom<I_MoviesData[]|undefined>({
     key: "posters",
     default: []
 })

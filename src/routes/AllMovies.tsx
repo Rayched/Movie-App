@@ -1,26 +1,22 @@
 import { useQuery } from "react-query";
 import { useEffect } from "react";
-import { getMovieNames } from "../modules/TestCodes";
-import { useRecoilState } from "recoil";
-import { API_Datas, I_MovieDatas } from "../modules/atoms";
+import { useSetRecoilState } from "recoil";
+import { getMoviesData } from "../modules/fetchs";
+import { I_MoviesData } from "../modules/movie_types";
+import { moviesData } from "../modules/atoms";
 
-function Home(){
-    const [poster, setPoster] = useRecoilState<I_MovieDatas[]|undefined>(API_Datas);
+function AllMovies(){
+    const setPoster = useSetRecoilState(moviesData);
 
-    const {isLoading: TestLoading, data: API_Test} = useQuery<I_MovieDatas[]>({
+    const {isLoading: isMovies, data: MoviesData} = useQuery<I_MoviesData[]>({
         queryKey: "Test",
-        queryFn: getMovieNames
+        queryFn: getMoviesData
     });
 
     useEffect(() => {
-        setPoster(API_Test);
-    }, [TestLoading]);
-
-    useEffect(() => {
-        console.log("poster is recoil state (atom)");
-        console.log(poster);
-    }, [poster]);
-
+        setPoster(MoviesData);
+    }, [isMovies]);
+    
     return (
         <div>
             <header>
@@ -29,14 +25,14 @@ function Home(){
             <div>
                 <ul>
                     {
-                        TestLoading ? <h4>영화 데이터를 가져오고 있습니다...</h4>
+                        isMovies ? <h4>영화 데이터를 가져오고 있습니다...</h4>
                         : (
                             <div>
                                 {
-                                    API_Test?.map((movies) => {
+                                    MoviesData?.map((movies) => {
                                         return (
                                             <li>
-                                                <img src={movies?.posters?.split("|")[0]}/>
+                                                <img src={movies?.posterURLs?.split("|")[0]}/>
                                                 {movies?.movieNm} / {movies?.director} / {movies.openDt}
                                             </li>
                                         );
@@ -51,7 +47,7 @@ function Home(){
     );
 };
 
-export default Home;
+export default AllMovies;
 
 /**
  * string.split("|")

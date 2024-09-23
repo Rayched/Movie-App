@@ -1,11 +1,7 @@
-import { useRecoilValue } from "recoil";
-import { API_Datas, I_MovieDatas } from "../modules/atoms";
 
 function MovieDetail(){
     //Detail Page 간단 작업
     //'베테랑 2' 클릭했다고 가정
-    const MovieDatas = useRecoilValue<I_MovieDatas[]|undefined>(API_Datas);
-    console.log(MovieDatas);
 
     return (
         <div>

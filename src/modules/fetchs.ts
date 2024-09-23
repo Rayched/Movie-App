@@ -52,3 +52,11 @@ export async function getMoviesData(){
 
     return moviesData;
 };
+
+export async function getMovieDetails(movieCd : string|undefined){
+    const getDetail = await(await(
+        await fetch(`${Kofic_baseURL}/movie/searchMovieInfo.json?key=${Kofic_Key}&movieCd=${movieCd}`)
+    ).json()).movieInfoResult.movieInfo;
+
+    return getDetail;
+};

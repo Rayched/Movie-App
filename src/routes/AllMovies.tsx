@@ -4,6 +4,7 @@ import { useSetRecoilState } from "recoil";
 import { getMoviesData } from "../modules/fetchs";
 import { I_MoviesData } from "../modules/movie_types";
 import { moviesData } from "../modules/atoms";
+import { Link } from "react-router-dom";
 
 function AllMovies(){
     const setPoster = useSetRecoilState(moviesData);
@@ -14,6 +15,7 @@ function AllMovies(){
     });
 
     useEffect(() => {
+        console.log(MoviesData);
         setPoster(MoviesData);
     }, [isMovies]);
     
@@ -32,8 +34,10 @@ function AllMovies(){
                                     MoviesData?.map((movies) => {
                                         return (
                                             <li>
-                                                <img src={movies?.posterURLs?.split("|")[0]}/>
-                                                {movies?.movieNm} / {movies?.director} / {movies.openDt}
+                                                <Link to={`/${movies?.movieCd}`}>
+                                                    <img src={movies?.posterURLs?.split("|")[0]}/>
+                                                    {movies?.movieNm} / {movies?.director} / {movies.openDt}
+                                                </Link>
                                             </li>
                                         );
                                     })

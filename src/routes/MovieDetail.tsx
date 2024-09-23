@@ -1,20 +1,32 @@
+import { useQuery } from "react-query";
+import { useParams } from "react-router-dom";
+import { getMovieDetails } from "../modules/fetchs";
+import { useEffect } from "react";
 
 function MovieDetail(){
     //Detail Page 간단 작업
     //'베테랑 2' 클릭했다고 가정
+    const {movieCd} = useParams();
+
+    const {isLoading, data} = useQuery({
+        queryKey: "MovieDetail",
+        queryFn: () => getMovieDetails(movieCd)
+    });
+
+    useEffect(() => console.log(data), [isLoading]);
 
     return (
         <div>
             <header>
-                <h3>베테랑2</h3>
+                <h3>{data?.movieNm}</h3>
             </header>
             <div>
                 <div>
                     <img src="http://file.koreafilm.or.kr/thm/02/99/18/54/tn_DPK022660.jpg"/>
                 </div>
                 <ul>
-                    <li>감독: 류승완</li>
-                    <li>개봉 일: 2024-09-13</li>
+                    <li>감독: {data?.directors[0].peopleNm} / {data?.directors[0].peopleNmEn}</li>
+                    <li>개봉 일: {data?.openDt}</li>
                 </ul>
                 <div>
                     <h4>줄거리</h4>

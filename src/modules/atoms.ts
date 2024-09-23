@@ -7,4 +7,4 @@ import { I_MoviesData } from "./movie_types";
 export const moviesData = atom<I_MoviesData[]|undefined>({
     key: "posters",
     default: []
-})
+});

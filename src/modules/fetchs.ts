@@ -23,7 +23,7 @@ const MovieInfos = async(movie: I_movies) => {
         movieCd: movie?.movieCd,
         director: getInfos?.directors.director[0].directorNm,
         posterURLs: getInfos?.posters,
-        plot: getInfos.plots.plot.plotText
+        plot: getInfos.plots.plot[0].plotText
     };
 };
 

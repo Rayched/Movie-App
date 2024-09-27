@@ -1,12 +1,20 @@
 import { useQuery } from "react-query";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
-import { getMoviesData } from "../modules/fetchs";
-import { I_MoviesData } from "../modules/movie_types";
+import { getDateTime, getMoviesData } from "../modules/fetchs";
 import { moviesData } from "../modules/atoms";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ToggleBtn from "../modules/ToggleBtn";
+
+export interface I_MoviesData {
+    movieNm?: string;
+    openDt?: string;
+    movieCd?: string;
+    director?: string;
+    posterURLs?: string;
+    plot?: string;
+};
 
 const MainWrapper = styled.div`
     color: ${(props) => props.theme.textColor};

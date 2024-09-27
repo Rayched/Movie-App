@@ -22,7 +22,7 @@ const MovieInfos = async(movie: I_movies) => {
         openDt: movie.openDt,
         movieCd: movie?.movieCd,
         director: getInfos?.directors.director[0].directorNm,
-        posterURLs: getInfos?.posters,
+        posterURLs: getInfos?.posters.split("|")[0],
         plot: getInfos.plots.plot[0].plotText
     };
 };

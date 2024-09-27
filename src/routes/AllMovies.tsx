@@ -5,6 +5,77 @@ import { getMoviesData } from "../modules/fetchs";
 import { I_MoviesData } from "../modules/movie_types";
 import { moviesData } from "../modules/atoms";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+import ToggleBtn from "../modules/ToggleBtn";
+
+const MainWrapper = styled.div`
+    color: ${(props) => props.theme.textColor};
+    background-color: inherit;
+    display: flex;
+    flex-direction: column;
+`;
+
+const Headers = styled.header`
+    display: flex;
+    justify-content: center;
+
+    h3 {
+        width: 500px;
+        border-bottom: 5px double ${(props) => props.theme.textColor};
+        font-weight: bold;
+        text-align: center;
+        padding: 20px;
+        font-size: 20px;
+    }
+
+    margin-bottom: 10px;
+`;
+
+const MovieList = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+const MovieItem = styled.div`
+    a {
+        display: flex;
+        width: 500px;
+        text-decoration: none;
+        color: inherit;
+    };
+    justify-content: center;
+    display: flex;
+    padding: 10px;
+    margin: 5px;
+    background-color: ${(props) => props.theme.itemColor};
+`;
+
+const MoviePoster = styled.img`
+    width: 200px;
+    height: 240px;
+    display: block;
+`;
+
+const MovieInfos = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 18px;
+`;
+
+const Footer = styled.footer`
+    display: flex;
+    justify-content: right;
+
+    button {
+        position: fixed;
+        top: 90%;
+        left: 90%;
+    }
+`;
 
 function AllMovies(){
     const setPoster = useSetRecoilState(moviesData);
@@ -20,34 +91,36 @@ function AllMovies(){
     }, [isMovies]);
     
     return (
-        <div>
-            <header>
+        <MainWrapper>
+            <Headers>
                     <h3>지금 영화 / Now Movies</h3>
-            </header>
-            <div>
-                <ul>
-                    {
-                        isMovies ? <h4>영화 데이터를 가져오고 있습니다...</h4>
-                        : (
-                            <div>
-                                {
-                                    MoviesData?.map((movies) => {
-                                        return (
-                                            <li>
-                                                <Link to={`/${movies?.movieCd}`}>
-                                                    <img src={movies?.posterURLs?.split("|")[0]}/>
-                                                    {movies?.movieNm} / {movies?.director} / {movies.openDt}
-                                                </Link>
-                                            </li>
-                                        );
-                                    })
-                                }
-                            </div>
-                        )
-                    }
-                </ul>
-            </div>
-        </div>
+            </Headers>
+                {
+                    isMovies ? "영화 데이터를 가져오고 있습니다..."
+                    : (
+                        <MovieList>
+                            {
+                                MoviesData?.map((movie) => {
+                                    return (
+                                        <MovieItem key={movie?.movieCd}>
+                                            <Link to={`/${movie?.movieCd}`}>
+                                                <MoviePoster src={movie?.posterURLs}/>
+                                                <MovieInfos>
+                                                    <span>{movie.movieNm}</span>
+                                                    <span>{movie.openDt}</span>
+                                                </MovieInfos>
+                                            </Link>
+                                        </MovieItem>
+                                    );
+                                })
+                            }
+                        </MovieList>
+                    )
+                }
+            <Footer>
+                <ToggleBtn />
+            </Footer>
+        </MainWrapper>
     );
 };
 

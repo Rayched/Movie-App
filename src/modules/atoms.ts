@@ -9,19 +9,7 @@ export const moviesData = atom<I_MoviesData[]|undefined>({
     default: []
 });
 
-export const movieData = selector({
-    key: "MovieData",
-    get: ({get}) => {
-        const movies = get(moviesData);
-
-        const result = movies?.map((movie) => {
-            return {
-                movidCd: movie?.movieCd,
-                posters: movie?.posterURLs?.split("|")[0],
-                plots: movie?.plot
-            };
-        });
-
-        return result;
-    }
+export const isDark = atom({
+    key: "isDark",
+    default: false
 });

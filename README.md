@@ -1,14 +1,9 @@
-## React Side Project, 'Movie App'
+💥💥💥💥💥💥💥💥💥💥💥💥
 
-`React` 처음 배울 때 개발했던 웹 페이지 **'Movie App'** <br/>
-처음부터 다시 만들어보는 Project
+- Project를 일단 배포해둔 상태에서 이어서 작업하려고 <br/>
+설정을 건드렸는데 많이 꼬여버렸다...
 
-### Skills
-- `TypeScript`
-- `React`
-    - `styled-components`
-    - `react-router`
-    - `react-query`
-
----
-
+- 고치는 방법을 찾는 거는 조금 오래 걸릴 것 같기 때문에
+- 프로젝트 폴더와 Github 저장소 둘 다 폭파시키고
+- 처음부터 다시 만들기로 했다...
+  
